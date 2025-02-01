@@ -47,7 +47,7 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 30),
         child: GNav(
           tabs: [
             GButton(
