@@ -1,3 +1,4 @@
+import 'package:fitflut/providers/GymgoalProvider.dart';
 import 'package:fitflut/workoutPages/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,11 @@ class PageSettings extends StatelessWidget {
   void storeLanguage(String lang) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("lang", lang);
+  }
+
+  void storeGymgoal(int days) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("gymgoal", days);
   }
 
   @override
@@ -115,6 +121,40 @@ class PageSettings extends StatelessWidget {
                                     .primary
                                     .withAlpha(100)
                                 : Theme.of(context).colorScheme.primary),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(LanguageProvider.getMap()["settings"]["gymgoal"],
+                    style: TextStyle(fontSize: 17)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Consumer<GymgoalProvider>(
+                      builder: (context, goalProv, child) => Row(
+                        children: [
+                          Slider(
+                            value: GymgoalProvider.goal.toDouble(),
+                            onChanged: (value) => {
+                              goalProv.setGoal(
+                                value.toInt(),
+                              ),
+                              storeGymgoal(value.toInt())
+                            },
+                            divisions: 7,
+                            min: 0,
+                            max: 7,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            GymgoalProvider.goal.toString(),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
                     )
                   ],

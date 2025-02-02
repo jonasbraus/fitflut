@@ -1,6 +1,9 @@
 import 'package:fitflut/helpers/DatabaseHelper.dart';
+import 'package:fitflut/modules/CustomCircleDiagram.dart';
+import 'package:fitflut/providers/GymgoalProvider.dart';
 import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PageHome extends StatelessWidget {
   const PageHome({super.key});
@@ -13,16 +16,27 @@ class PageHome extends StatelessWidget {
   }
 
   String formatTime(DateTime time) {
-    String day = time.day.toString().length == 1 ? "0${time.day}" : "${time.day}";
-    String month = time.month.toString().length == 1 ? "0${time.month}" : "${time.month}";
-    String hour = time.hour.toString().length == 1 ? "0${time.hour}" : "${time.hour}";
-    String minute = time.minute.toString().length == 1 ? "0${time.minute}" : "${time.minute}";
+    String day =
+    time.day
+        .toString()
+        .length == 1 ? "0${time.day}" : "${time.day}";
+    String month =
+    time.month
+        .toString()
+        .length == 1 ? "0${time.month}" : "${time.month}";
+    String hour =
+    time.hour
+        .toString()
+        .length == 1 ? "0${time.hour}" : "${time.hour}";
+    String minute = time.minute
+        .toString()
+        .length == 1
+        ? "0${time.minute}"
+        : "${time.minute}";
     return "$day.$month $hour:$minute";
   }
-  
-  Future<List<int>> getWorkoutsLast7Days() async {
-    DateTime now = DateTime.now();
 
+  Future<List<int>> getWorkoutsLast7Days(DateTime now) async {
     List<int> output = [];
 
     for (int i = 0; i < 7; i++) {
@@ -34,8 +48,24 @@ class PageHome extends StatelessWidget {
     return output;
   }
 
-  Widget buildWorkoutDays(
-      BuildContext context, AsyncSnapshot<List<int>> snapshot) {
+  Future<int> getWeeklyGymDays() async {
+    DateTime endOfWeek = DateTime.now().add(Duration(days: 7 - DateTime
+        .now()
+        .weekday));
+    List<int> dailyWorkouts = await getWorkoutsLast7Days(endOfWeek);
+
+    int output = 0;
+    for (int i in dailyWorkouts) {
+      if (i > 0) {
+        output += 1;
+      }
+    }
+
+    return output;
+  }
+
+  Widget buildWorkoutDays(BuildContext context,
+      AsyncSnapshot<List<int>> snapshot) {
     if (!snapshot.hasData) {
       return Container();
     }
@@ -43,7 +73,6 @@ class PageHome extends StatelessWidget {
     DateTime now = DateTime.now();
 
     final weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +91,10 @@ class PageHome extends StatelessWidget {
                     height: (snapshot.data![i]).toDouble() * 20,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Theme.of(context).colorScheme.onSurface),
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .onSurface),
                   ),
                   SizedBox(width: 10)
                 ],
@@ -76,7 +108,9 @@ class PageHome extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(weekdays[now.subtract(Duration(days: i)).weekday - 1]),
+                  Text(weekdays[now
+                      .subtract(Duration(days: i))
+                      .weekday - 1]),
                   SizedBox(width: 10)
                 ],
               )
@@ -86,8 +120,8 @@ class PageHome extends StatelessWidget {
     );
   }
 
-  Widget buildLastWorkoutDisplay(
-      BuildContext context, AsyncSnapshot<Map<String, Object?>> snapshot) {
+  Widget buildLastWorkoutDisplay(BuildContext context,
+      AsyncSnapshot<Map<String, Object?>> snapshot) {
     if (!snapshot.hasData) {
       return Container();
     }
@@ -105,8 +139,8 @@ class PageHome extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15)),
+              decoration:
+              BoxDecoration(borderRadius: BorderRadius.circular(15)),
               child: Center(
                 child: Text(
                   name,
@@ -143,69 +177,103 @@ class PageHome extends StatelessWidget {
     );
   }
 
+  Widget buildCircleDiagram(BuildContext context, AsyncSnapshot<int> snapshot) {
+    if (!snapshot.hasData) {
+      return Container();
+    }
+
+    Color background = Theme.of(context).colorScheme.secondary.withAlpha(20);
+
+    return CustomCircleDiagram(
+      size: 90,
+      backgroundColor: background,
+      strokeColor: Theme.of(context).colorScheme.primary,
+      max: GymgoalProvider.goal.toDouble(),
+      value: snapshot.data!.toDouble(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DatabaseHelper.getLastWorkout();
     return FutureBuilder(
-      future: getWorkoutsLast7Days(),
-      builder: (context, snapshot) => FutureBuilder(
-        future: DatabaseHelper.getLastWorkout(),
-        builder: (context, snapshot2) => SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20,),
-              Text(
-                LanguageProvider.getMap()["home"]["welcome"],
-                style: TextStyle(fontSize: 25),
-              ),
-              SizedBox(height: 30),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                margin: EdgeInsets.symmetric(horizontal: 50),
-                decoration: BoxDecoration(
-                    color:
-                    Theme.of(context).colorScheme.secondary.withAlpha(20),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      LanguageProvider.getMap()["home"]["last7dayactivity"],
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 20),
-                    buildWorkoutDays(context, snapshot)
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                margin: EdgeInsets.symmetric(horizontal: 50),
-                decoration: BoxDecoration(
-                    color:
-                    Theme.of(context).colorScheme.secondary.withAlpha(20),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      LanguageProvider.getMap()["home"]["lastworkout"],
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 10),
-                    buildLastWorkoutDisplay(context, snapshot2)
-                  ],
-                ),
-              ),
-            ],
-          )
-        ),
-      ),
+      future: getWorkoutsLast7Days(DateTime.now()),
+      builder: (context, snapshot) =>
+          FutureBuilder(
+            future: DatabaseHelper.getLastWorkout(),
+            builder: (context, snapshot2) =>
+                SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          LanguageProvider.getMap()["home"]["welcome"],
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        SizedBox(height: 30),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          decoration: BoxDecoration(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withAlpha(20),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                LanguageProvider
+                                    .getMap()["home"]["last7dayactivity"],
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(height: 20),
+                              buildWorkoutDays(context, snapshot)
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(LanguageProvider.getMap()["settings"]["gymgoal"],
+                          style: TextStyle(fontSize: 16),),
+                        SizedBox(height: 10),
+                        FutureBuilder(future: getWeeklyGymDays(),
+                          builder: (context, snapshot) =>
+                              Consumer<GymgoalProvider>(
+                                builder: (context, goalProv, child) => buildCircleDiagram(context, snapshot),
+                              ),),
+                        SizedBox(height: 10),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          decoration: BoxDecoration(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withAlpha(20),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                LanguageProvider
+                                    .getMap()["home"]["lastworkout"],
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(height: 10),
+                              buildLastWorkoutDisplay(context, snapshot2)
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+          ),
     );
   }
 }

@@ -41,7 +41,8 @@ class LanguageProvider extends ChangeNotifier {
       "settings": {
         "settings": "Einstellungen",
         "colorscheme": "Farbthema",
-        "language": "Sprache"
+        "language": "Sprache",
+        "gymgoal": "Gym Ziel"
       },
       "general": {
         "help": "Hilfe",
@@ -95,7 +96,8 @@ class LanguageProvider extends ChangeNotifier {
       "settings": {
         "settings": "Settings",
         "colorscheme": "Color Scheme",
-        "language": "Language"
+        "language": "Language",
+        "gymgoal": "Gym Goal"
       },
       "general": {
         "help": "Help",

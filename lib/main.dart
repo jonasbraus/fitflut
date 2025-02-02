@@ -2,6 +2,7 @@ import 'package:fitflut/gymPages/BodyRegions.dart';
 import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
 import 'package:fitflut/providers/GymPageFilterProvider.dart';
+import 'package:fitflut/providers/GymgoalProvider.dart';
 import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:fitflut/providers/PageProvider.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
   await DatabaseHelper.initDb();
   SettingsProvider.selectedColor = await getColor();
   LanguageProvider.lang = await getLang();
+  GymgoalProvider.goal = await getGymgoal();
 
   runApp(const MyApp());
 }
@@ -35,6 +37,12 @@ Future<String> getLang() async {
   final prefs = await SharedPreferences.getInstance();
 
   return prefs.getString("lang") ?? "en";
+}
+
+Future<int> getGymgoal() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  return prefs.getInt("gymgoal") ?? 2;
 }
 
 class MyApp extends StatelessWidget {
@@ -67,6 +75,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => LanguageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GymgoalProvider(),
         )
       ],
       child: Consumer<SettingsProvider>(
