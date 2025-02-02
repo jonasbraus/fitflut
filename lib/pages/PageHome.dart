@@ -106,8 +106,6 @@ class PageHome extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/gym3.jpeg"), fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(15)),
               child: Center(
                 child: Text(
