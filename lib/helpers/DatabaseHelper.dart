@@ -49,8 +49,6 @@ class DatabaseHelper {
   static Future<int> getWorkoutCountByDay(int year, int month, int day) async {
     List<Map<String, Object?>> result = await database.query("workoutTrack");
 
-    print(result);
-
     int output = 0;
     for (Map<String, Object?> map in result) {
       String timeStamp = map["time"] as String;
@@ -60,9 +58,25 @@ class DatabaseHelper {
       }
     }
 
-    print(output);
-
     return output;
+  }
+
+  static Future<Map<String, Object?>> getLastWorkout() async {
+    List<Map<String, Object?>> result = await database.rawQuery("select max(id) as 'id', duration, time, workout_id from workoutTrack");
+    print(result);
+    Map<String, Object?> lastWorkout = result.first;
+    int id = lastWorkout["workout_id"] as int;
+    DateTime dt = DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').parse(lastWorkout["time"] as String);
+    int duration = lastWorkout["duration"] as int;
+    List<Map<String, Object?>> workout_map = await database.query("workout", where: "id = ?", whereArgs: [id]);
+    print(workout_map);
+    String name = workout_map.last["name"] as String;
+
+    return {
+      "time": dt,
+      "duration": duration,
+      "name": name
+    };
   }
 
   static Future<void> insertExercise(Exercise exercise) async {

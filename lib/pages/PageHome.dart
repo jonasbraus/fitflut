@@ -4,6 +4,21 @@ import 'package:flutter/material.dart';
 class PageHome extends StatelessWidget {
   const PageHome({super.key});
 
+  String calcTimeFormat(int seconds) {
+    int minutes = seconds ~/ 60;
+    seconds = seconds % 60;
+
+    return "$minutes min $seconds sec";
+  }
+
+  String formatTime(DateTime time) {
+    String day = time.day.toString().length == 1 ? "0${time.day}" : "${time.day}";
+    String month = time.month.toString().length == 1 ? "0${time.month}" : "${time.month}";
+    String hour = time.hour.toString().length == 1 ? "0${time.hour}" : "${time.hour}";
+    String minute = time.minute.toString().length == 1 ? "0${time.minute}" : "${time.minute}";
+    return "$day.$month $hour:$minute";
+  }
+  
   Future<List<int>> getWorkoutsLast7Days() async {
     DateTime now = DateTime.now();
 
@@ -28,7 +43,6 @@ class PageHome extends StatelessWidget {
 
     final weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
-    print(snapshot.data!);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -71,43 +85,126 @@ class PageHome extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final weekdays = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ];
-    return FutureBuilder(
-      future: getWorkoutsLast7Days(),
-      builder: (context, snapshot) => Center(
-        child: Column(
+  Widget buildLastWorkoutDisplay(
+      BuildContext context, AsyncSnapshot<Map<String, Object?>> snapshot) {
+    if (!snapshot.hasData) {
+      return Container();
+    }
+
+    DateTime dt = snapshot.data!["time"] as DateTime;
+    int duration = snapshot.data!["duration"] as int;
+    String name = snapshot.data!["name"] as String;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Welcome",
-              style: TextStyle(fontSize: 25),
-            ),
-            SizedBox(height: 30),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              margin: EdgeInsets.symmetric(horizontal: 50),
-              decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondary.withAlpha(20), borderRadius: BorderRadius.circular(15)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Last 7 days activity", style: TextStyle(fontSize: 16),),
-                  SizedBox(height: 20),
-                  buildWorkoutDays(context, snapshot)
-                ],
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/gym3.jpeg"), fit: BoxFit.cover),
+                  borderRadius: BorderRadius.circular(15)),
+              child: Center(
+                child: Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.timer),
+                SizedBox(width: 5),
+                Text(calcTimeFormat(duration))
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.calendar_month),
+                SizedBox(width: 5),
+                Text(formatTime(dt))
+              ],
             )
           ],
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    DatabaseHelper.getLastWorkout();
+    return FutureBuilder(
+      future: getWorkoutsLast7Days(),
+      builder: (context, snapshot) => FutureBuilder(
+        future: DatabaseHelper.getLastWorkout(),
+        builder: (context, snapshot2) => SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 20,),
+              Text(
+                "Welcome",
+                style: TextStyle(fontSize: 25),
+              ),
+              SizedBox(height: 30),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                decoration: BoxDecoration(
+                    color:
+                    Theme.of(context).colorScheme.secondary.withAlpha(20),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Last 7 days activity",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 20),
+                    buildWorkoutDays(context, snapshot)
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                decoration: BoxDecoration(
+                    color:
+                    Theme.of(context).colorScheme.secondary.withAlpha(20),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Last workout",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    buildLastWorkoutDisplay(context, snapshot2)
+                  ],
+                ),
+              ),
+            ],
+          )
         ),
       ),
     );

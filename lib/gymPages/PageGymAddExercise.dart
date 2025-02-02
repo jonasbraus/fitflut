@@ -67,6 +67,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       Slider(
                         min: 1,
                         max: 100,
+                        divisions: 50,
                         value: weight.toDouble(),
                         onChanged: (value) => setState(() {
                           weight = value.toInt();
@@ -122,7 +123,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Full Body"),
+                        title: Text("Whole Body"),
                         groupValue: bodyRegion,
                         value: BodyRegions.fullBody,
                         onChanged: (value) => setState(() {

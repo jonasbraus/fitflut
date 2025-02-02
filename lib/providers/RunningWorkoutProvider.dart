@@ -36,7 +36,7 @@ class RunningWorkoutProvider extends ChangeNotifier {
     startTime = DateTime.now();
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      durationSeconds += 1;
+      durationSeconds = DateTime.now().difference(startTime).inSeconds;
       notifyListeners();
     },);
   }
@@ -48,7 +48,7 @@ class RunningWorkoutProvider extends ChangeNotifier {
     notifyListeners();
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      durationSeconds += 1;
+      durationSeconds = DateTime.now().difference(startTime).inSeconds;
       notifyListeners();
     },);
   }

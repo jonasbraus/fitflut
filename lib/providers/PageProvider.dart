@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 
 class PageProvider extends ChangeNotifier {
   int selectedPage = 0;
-  List<String> titles = ["Home", "Exercises", "Workouts", "Calories", "Settings"];
-  List<Widget> pages = [PageHome(), PageGym(), PageWorkout(), PageCalories(), PageSettings()];
+  List<String> titles = ["Home", "Exercises", "Workouts", "Settings"];
+  List<Widget> pages = [PageHome(), PageGym(), PageWorkout(), PageSettings()];
 
   String getSelectedTitle() {
     return titles[selectedPage];

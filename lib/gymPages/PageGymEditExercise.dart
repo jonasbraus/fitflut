@@ -79,6 +79,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         Slider(
                           min: 1,
                           max: 100,
+                          divisions: 50,
                           value: weight.toDouble(),
                           onChanged: (value) => setState(() {
                             weight = value.toInt();
@@ -134,7 +135,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text("Full Body"),
+                          title: Text("Whole Body"),
                           groupValue: bodyRegion,
                           value: BodyRegions.fullBody,
                           onChanged: (value) => setState(() {
@@ -156,16 +157,40 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                 Expanded(
                     child: FilledButton.tonalIcon(
                   onPressed: () async => {
-                    await DatabaseHelper.deleteExercise(Exercise(
-                        id: widget.exercise.id,
-                        name: name,
-                        weight: weight,
-                        bodyRegion: bodyRegion)),
-                    Provider.of<ExerciseUpdateProvider>(context, listen: false)
-                        .updateState(),
-                    Navigator.of(context).pop()
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: Text(
+                          "Sure?",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        actions: [
+                          FilledButton.icon(
+                            onPressed: () async => {
+                              await DatabaseHelper.deleteExercise(Exercise(
+                                  id: widget.exercise.id,
+                                  name: name,
+                                  weight: weight,
+                                  bodyRegion: bodyRegion)),
+                              Provider.of<ExerciseUpdateProvider>(context,
+                                      listen: false)
+                                  .updateState(),
+                              Navigator.of(context).pop(),
+                              Navigator.of(context).pop()
+                            },
+                            label: Text("Delete"),
+                            icon: Icon(Icons.delete),
+                          ),
+                          FilledButton.tonalIcon(
+                            onPressed: () => {Navigator.pop(context)},
+                            label: Text("Cancel"),
+                            icon: Icon(Icons.cancel),
+                          )
+                        ],
+                      ),
+                    )
                   },
-                      icon: Icon(Icons.delete),
+                  icon: Icon(Icons.delete),
                   label: Text("Delete"),
                 )),
                 SizedBox(
@@ -183,7 +208,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         .updateState(),
                     Navigator.of(context).pop()
                   },
-                      icon: Icon(Icons.save_alt),
+                  icon: Icon(Icons.save_alt),
                   label: Text("Save"),
                 ))
               ],

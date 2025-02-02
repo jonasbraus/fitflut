@@ -4,6 +4,7 @@ import 'package:fitflut/helpers/WorkoutEditType.dart';
 import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:search_page/search_page.dart';
 
 import '../helpers/DatabaseHelper.dart';
 import '../helpers/Exercise.dart';
@@ -75,55 +76,55 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                         Center(
                           child: FilledButton.icon(
                             onPressed: () => {
-                              showDialog(
+                              showSearch(
                                 context: context,
-                                builder: (context) => SimpleDialog(
-                                  titlePadding: EdgeInsets.all(15),
-                                  contentPadding: EdgeInsets.all(15),
-                                  insetPadding: EdgeInsets.zero,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        for (Exercise exercise in snapshot.data!)
-                                          GestureDetector(
-                                            child: Container(
-                                              margin: EdgeInsets.only(bottom: 10),
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 15),
-                                              decoration: BoxDecoration(
-                                                color: Colors.black,
-                                                borderRadius:
-                                                BorderRadius.circular(15),
-                                                image: DecorationImage(
-                                                    image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  exercise.name,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 18,
-                                                      color: Colors.white,
-                                                      shadows: [
-                                                        Shadow(
-                                                            color: Colors.black,
-                                                            blurRadius: 5)
-                                                      ]),
-                                                ),
-                                              ),
-                                            ),
-                                            onTap: () => setState(() {
-                                              changes.add(WorkoutEditChange(
-                                                  workoutId: widget.workout.id,
-                                                  exerciseId: exercise.id,
-                                                  type: WorkoutEditType.create));
-                                              exercises.add(exercise);
-                                              Navigator.pop(context);
-                                            }),
-                                          )
-                                      ],
-                                    )
-                                  ],
+                                delegate: SearchPage<Exercise>(
+                                  items: snapshot.data!,
+                                  searchLabel: "Search exercise",
+                                  filter: (exercise) => [exercise.name],
+                                  showItemsOnEmpty: true,
+                                  builder: (exercise) => GestureDetector(
+                                    onTap: () => setState(() {
+                                      changes.add(WorkoutEditChange(
+                                          workoutId: widget.workout.id,
+                                          exerciseId: exercise.id,
+                                          type: WorkoutEditType.create));
+                                      exercises.add(exercise);
+                                      Navigator.pop(context);
+                                    }),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/body.jpeg"),
+                                              fit: BoxFit.cover),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            exercise.name,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                      color: Colors.black,
+                                                      blurRadius: 5)
+                                                ]),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               )
                             },
@@ -140,18 +141,21 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                             decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                    image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover)
-                            ),
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage("assets/body.jpeg"),
+                                    fit: BoxFit.cover)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                   onPressed: () => {
                                     setState(() {
-                                      changes.add(WorkoutEditChange(workoutId: widget.workout.id, exerciseId: exercise.id, type: WorkoutEditType.delete));
+                                      changes.add(WorkoutEditChange(
+                                          workoutId: widget.workout.id,
+                                          exerciseId: exercise.id,
+                                          type: WorkoutEditType.delete));
                                       exercises.remove(exercise);
                                     })
                                   },
@@ -189,11 +193,35 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                   Expanded(
                     child: FilledButton.tonalIcon(
                       onPressed: () async => {
-                        await DatabaseHelper.deleteWorkout(widget.workout),
-                        Provider.of<WorkoutUpdateProvider>(context,
-                                listen: false)
-                            .updateState(),
-                        Navigator.of(context).pop()
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            content: Text(
+                              "Sure?",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            actions: [
+                              FilledButton.icon(
+                                onPressed: () async => {
+                                  await DatabaseHelper.deleteWorkout(
+                                      widget.workout),
+                                  Provider.of<WorkoutUpdateProvider>(context,
+                                          listen: false)
+                                      .updateState(),
+                                  Navigator.of(context).pop(),
+                                  Navigator.of(context).pop()
+                                },
+                                label: Text("Delete"),
+                                icon: Icon(Icons.delete),
+                              ),
+                              FilledButton.tonalIcon(
+                                  onPressed: () =>
+                                      {Navigator.of(context).pop()},
+                                  label: Text("Cancel"),
+                              icon: Icon(Icons.cancel),)
+                            ],
+                          ),
+                        ),
                       },
                       icon: Icon(Icons.delete),
                       label: Text("Delete"),
@@ -205,8 +233,15 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                   Expanded(
                     child: FilledButton.icon(
                       onPressed: () async => {
-                        await DatabaseHelper.updateWorkout(Workout(id: widget.workout.id, name: name, exercises: []), changes),
-                        Provider.of<WorkoutUpdateProvider>(context, listen: false).updateState(),
+                        await DatabaseHelper.updateWorkout(
+                            Workout(
+                                id: widget.workout.id,
+                                name: name,
+                                exercises: []),
+                            changes),
+                        Provider.of<WorkoutUpdateProvider>(context,
+                                listen: false)
+                            .updateState(),
                         Navigator.of(context).pop()
                       },
                       icon: Icon(Icons.save_alt),

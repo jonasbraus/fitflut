@@ -6,18 +6,28 @@ import 'package:fitflut/providers/PageProvider.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
 import 'package:fitflut/providers/WorkoutPageProvider.dart';
 import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
+import 'package:fitflut/workoutPages/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await DatabaseHelper.initDb();
+  SettingsProvider.selectedColor = await getColor();
+  print(SettingsProvider.selectedColor);
 
   runApp(const MyApp());
+}
+
+Future<int> getColor() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  return prefs.getInt("color") ?? 0;
 }
 
 class MyApp extends StatelessWidget {
@@ -45,20 +55,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => RunningWorkoutProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SettingsProvider(),
+        ),
       ],
-      child: MaterialApp(
+      child: Consumer<SettingsProvider>(builder: (context, prov, child) => MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor()),
           useMaterial3: true,
         ),
         darkTheme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue, brightness: Brightness.dark),
+              seedColor: prov.getColor(), brightness: Brightness.dark),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
         home: const MyHome(),
-      ),
+      ),),
     );
   }
 }
@@ -139,7 +152,7 @@ class MyHome extends StatelessWidget {
                       ),
                       DropdownMenuItem<String>(
                         value: "fullBody",
-                        child: Text("Full Body"),
+                        child: Text("Whole Body"),
                       ),
                     ],
                     onChanged: (String? newValue) {
