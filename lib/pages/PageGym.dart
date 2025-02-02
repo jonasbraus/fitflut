@@ -60,11 +60,12 @@ class PageGym extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                        EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 0),
                     child: FilledButton.icon(
                       onPressed: () => {
                         Navigator.of(context).push(MaterialPageRoute(

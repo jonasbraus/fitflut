@@ -48,53 +48,53 @@ class PageWorkout extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                    "assets/gym3.jpeg",
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.surface.withAlpha(150),
-                    BlendMode.srcATop
-                  )
-                ),
-                borderRadius: BorderRadius.circular(15)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Text(
-                    workout.name,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  height: 0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${workout.exercises.length} ",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    image: AssetImage(
+                      "assets/gym3.jpeg",
                     ),
-                    Text(
-                      LanguageProvider.getMap()["workouts"]["exercises"],
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.surface.withAlpha(150),
+                        BlendMode.srcATop)),
+                borderRadius: BorderRadius.circular(15)),
+            child: Padding(padding: EdgeInsets.symmetric(horizontal: 30), child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Text(
+                        workout.name,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${workout.exercises.length} ",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                        Text(
+                          LanguageProvider.getMap()["workouts"]["exercises"],
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                )
+                Icon(Icons.play_arrow)
               ],
-            ),
+            ),),
           ),
         )
     ];
@@ -138,11 +138,12 @@ class PageWorkout extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                      EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 0),
                   child: FilledButton.icon(
                     onPressed: () => {
                       Navigator.of(context).push(MaterialPageRoute(

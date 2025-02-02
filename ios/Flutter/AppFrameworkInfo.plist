@@ -22,5 +22,13 @@
   <string>1.0</string>
   <key>MinimumOSVersion</key>
   <string>12.0</string>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+    <key>NSExceptionDomains</key>
+    <dict>
+      </dict>
+  </dict>
 </dict>
 </plist>

@@ -84,7 +84,8 @@ class MyApp extends StatelessWidget {
         builder: (context, prov, child) => Consumer<LanguageProvider>(
           builder: (context, value, child) => MaterialApp(
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor(), brightness: Brightness.dark),
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: prov.getColor(), brightness: Brightness.dark),
               useMaterial3: true,
             ),
             darkTheme: ThemeData(
@@ -107,34 +108,43 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 30),
-        child: GNav(
-          tabs: [
-            GButton(
-              icon: Icons.home_rounded,
-            ),
-            GButton(
-              icon: Icons.heart_broken_rounded,
-            ),
-            GButton(
-              icon: Icons.fitness_center_outlined,
-            ),
-            GButton(
-              icon: Icons.settings,
-            )
-          ],
-          iconSize: 22,
-          style: GnavStyle.google,
-          backgroundColor: Colors.transparent,
-          activeColor: Theme.of(context).colorScheme.onPrimary,
-          tabBackgroundColor: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.all(15),
-          duration: Duration(seconds: 0),
-          onTabChange: (value) =>
-              Provider.of<PageProvider>(context, listen: false)
-                  .changePage(value),
+      bottomNavigationBar: Consumer<PageProvider>(
+        builder: (context, pageProv, child) => Container(
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+              borderRadius:
+                  pageProv.selectedPage == 1 || pageProv.selectedPage == 2
+                      ? BorderRadius.circular(0)
+                      : BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15))),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),
+          child: GNav(
+            tabs: [
+              GButton(
+                icon: Icons.home_rounded,
+              ),
+              GButton(
+                icon: Icons.heart_broken_rounded,
+              ),
+              GButton(
+                icon: Icons.fitness_center_outlined,
+              ),
+              GButton(
+                icon: Icons.settings,
+              )
+            ],
+            iconSize: 22,
+            style: GnavStyle.google,
+            backgroundColor: Colors.transparent,
+            activeColor: Theme.of(context).colorScheme.onPrimary,
+            tabBackgroundColor: Theme.of(context).colorScheme.primary,
+            padding: EdgeInsets.all(15),
+            duration: Duration(seconds: 0),
+            onTabChange: (value) =>
+                Provider.of<PageProvider>(context, listen: false)
+                    .changePage(value),
+          ),
         ),
       ),
       appBar: AppBar(
@@ -153,31 +163,38 @@ class MyHome extends StatelessWidget {
                     items: [
                       DropdownMenuItem<String>(
                         value: "",
-                        child: Text(LanguageProvider.getMap()["exercises"]["all"]),
+                        child:
+                            Text(LanguageProvider.getMap()["exercises"]["all"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "arms",
-                        child: Text(LanguageProvider.getMap()["exercises"]["arms"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["arms"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "chest",
-                        child: Text(LanguageProvider.getMap()["exercises"]["chest"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["chest"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "stomach",
-                        child: Text(LanguageProvider.getMap()["exercises"]["stomach"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["stomach"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "back",
-                        child: Text(LanguageProvider.getMap()["exercises"]["back"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["back"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "legs",
-                        child: Text(LanguageProvider.getMap()["exercises"]["legs"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["legs"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "fullBody",
-                        child: Text(LanguageProvider.getMap()["exercises"]["fullbody"]),
+                        child: Text(
+                            LanguageProvider.getMap()["exercises"]["fullbody"]),
                       ),
                     ],
                     onChanged: (String? newValue) {
