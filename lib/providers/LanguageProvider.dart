@@ -48,7 +48,7 @@ class LanguageProvider extends ChangeNotifier {
         "delete": "Löschen",
         "save": "Speichern",
         "sure": "Sicher",
-        "cancel": "Abbrechen"
+        "cancel": "Zurück"
       },
       "titles": [
         "Home",

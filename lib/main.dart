@@ -142,31 +142,31 @@ class MyHome extends StatelessWidget {
                     items: [
                       DropdownMenuItem<String>(
                         value: "",
-                        child: Text("All"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["all"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "arms",
-                        child: Text("Arms"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["arms"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "chest",
-                        child: Text("Chest"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["chest"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "stomach",
-                        child: Text("Stomach"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["stomach"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "back",
-                        child: Text("Back"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["back"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "legs",
-                        child: Text("Legs"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["legs"]),
                       ),
                       DropdownMenuItem<String>(
                         value: "fullBody",
-                        child: Text("Whole Body"),
+                        child: Text(LanguageProvider.getMap()["exercises"]["fullbody"]),
                       ),
                     ],
                     onChanged: (String? newValue) {
