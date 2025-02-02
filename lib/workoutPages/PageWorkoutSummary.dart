@@ -2,6 +2,7 @@ import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
 import 'package:fitflut/providers/WorkoutPageProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:material_color_utilities/material_color_utilities.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/Workout.dart';
@@ -55,10 +56,13 @@ class PageWorkoutSummary extends StatelessWidget {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/gym3.jpeg"),
-                          fit: BoxFit.cover, colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.surface.withAlpha(150),
-                          BlendMode.srcATop
-                      )),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context)
+                                  .colorScheme
+                                  .surface
+                                  .withAlpha(150),
+                              BlendMode.srcATop)),
                       borderRadius: BorderRadius.circular(15)),
                   child: Center(
                     child: Text(
@@ -144,10 +148,18 @@ class PageWorkoutSummary extends StatelessWidget {
                 )
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
+            Container(
+              padding: EdgeInsets.only(left: 5, right: 5, top: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))
+              ),
               child: FilledButton.icon(
-                onPressed: () => {DatabaseHelper.insertTrack(runningProv.durationSeconds, runningProv.startTime, pageProv.workout!.id), pageProv.selectPage(0, null)},
+                onPressed: () => {
+                  DatabaseHelper.insertTrack(runningProv.durationSeconds,
+                      runningProv.startTime, pageProv.workout!.id),
+                  pageProv.selectPage(0, null)
+                },
                 icon: Icon(Icons.check),
                 label: Text(LanguageProvider.getMap()["workouts"]["finish"]),
               ),
