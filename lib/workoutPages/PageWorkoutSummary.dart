@@ -55,7 +55,10 @@ class PageWorkoutSummary extends StatelessWidget {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/gym3.jpeg"),
-                          fit: BoxFit.cover),
+                          fit: BoxFit.cover, colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.surface.withAlpha(150),
+                          BlendMode.srcATop
+                      )),
                       borderRadius: BorderRadius.circular(15)),
                   child: Center(
                     child: Text(

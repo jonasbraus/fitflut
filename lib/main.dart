@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         builder: (context, prov, child) => Consumer<LanguageProvider>(
           builder: (context, value, child) => MaterialApp(
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor()),
+              colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor(), brightness: Brightness.dark),
               useMaterial3: true,
             ),
             darkTheme: ThemeData(

@@ -22,11 +22,15 @@ class ExerciseDisplay extends StatelessWidget {
         ))
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 40),
+        margin: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover),
+              image: AssetImage("assets/body.jpeg"),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.surface.withAlpha(150),
+                  BlendMode.srcATop)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,54 +48,59 @@ class ExerciseDisplay extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.heart_broken_rounded,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "${exercise.weight} kg",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.person_rounded,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      {
-                        "stomach": LanguageProvider.getMap()["exercises"]["stomach"],
-                        "legs": LanguageProvider.getMap()["exercises"]["legs"],
-                        "chest": LanguageProvider.getMap()["exercises"]["chest"],
-                        "arms": LanguageProvider.getMap()["exercises"]["arms"],
-                        "fullBody": LanguageProvider.getMap()["exercises"]["fullbody"],
-                        "back": LanguageProvider.getMap()["exercises"]["back"]
-                      }["${exercise.bodyRegion.toString().split('.')[1]}"]!,
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    )
-                  ],
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.heart_broken_rounded,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "${exercise.weight} kg",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person_rounded,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        {
+                          "stomach": LanguageProvider.getMap()["exercises"]
+                              ["stomach"],
+                          "legs": LanguageProvider.getMap()["exercises"]
+                              ["legs"],
+                          "chest": LanguageProvider.getMap()["exercises"]
+                              ["chest"],
+                          "arms": LanguageProvider.getMap()["exercises"]
+                              ["arms"],
+                          "fullBody": LanguageProvider.getMap()["exercises"]
+                              ["fullbody"],
+                          "back": LanguageProvider.getMap()["exercises"]["back"]
+                        }["${exercise.bodyRegion.toString().split('.')[1]}"]!,
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 10,

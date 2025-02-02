@@ -107,7 +107,10 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   "assets/body.jpeg"),
-                                              fit: BoxFit.cover),
+                                              fit: BoxFit.cover, colorFilter: ColorFilter.mode(
+                                              Theme.of(context).colorScheme.surface.withAlpha(150),
+                                              BlendMode.srcATop
+                                          )),
                                         ),
                                         child: Center(
                                           child: Text(
@@ -146,7 +149,10 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
                                     image: AssetImage("assets/body.jpeg"),
-                                    fit: BoxFit.cover)),
+                                    fit: BoxFit.cover, colorFilter: ColorFilter.mode(
+                                    Theme.of(context).colorScheme.surface.withAlpha(150),
+                                    BlendMode.srcATop
+                                ))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

@@ -39,14 +39,24 @@ class PageWorkout extends StatelessWidget {
             ));
           },
           onTap: () {
-            Provider.of<RunningWorkoutProvider>(context, listen: false).clearCheckboxes();
-            Provider.of<WorkoutPageProvider>(context, listen: false).selectPage(1, workout);
+            Provider.of<RunningWorkoutProvider>(context, listen: false)
+                .clearCheckboxes();
+            Provider.of<WorkoutPageProvider>(context, listen: false)
+                .selectPage(1, workout);
           },
           child: Container(
-            margin: EdgeInsets.only(bottom: 10, left: 40, right: 40),
+            margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/gym3.jpeg"), fit: BoxFit.cover),
+                  image: AssetImage(
+                    "assets/gym3.jpeg",
+                  ),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.surface.withAlpha(150),
+                    BlendMode.srcATop
+                  )
+                ),
                 borderRadius: BorderRadius.circular(15)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +74,7 @@ class PageWorkout extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,11 +115,11 @@ class PageWorkout extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding:
-                  EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                      EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
                   child: SingleChildScrollView(
                     child: Padding(
                       padding:
-                      EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                          EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
                       child: Column(
                         children: [
                           SizedBox(
@@ -132,14 +142,15 @@ class PageWorkout extends StatelessWidget {
                 ),
                 child: Padding(
                   padding:
-                  EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                      EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
                   child: FilledButton.icon(
                     onPressed: () => {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PageWorkoutAdd(),
                       ))
                     },
-                    label: Text(LanguageProvider.getMap()["workouts"]["newworkout"]),
+                    label: Text(
+                        LanguageProvider.getMap()["workouts"]["newworkout"]),
                     icon: Icon(Icons.add_rounded),
                   ),
                 ),
@@ -153,10 +164,12 @@ class PageWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WorkoutPageProvider>(builder: (context, value, child) => {
-      0: mainPage(context),
-      1: WorkoutTask(),
-      2: PageWorkoutSummary()
-    }[value.selectedPage]!,);
+    return Consumer<WorkoutPageProvider>(
+      builder: (context, value, child) => {
+        0: mainPage(context),
+        1: WorkoutTask(),
+        2: PageWorkoutSummary()
+      }[value.selectedPage]!,
+    );
   }
 }
