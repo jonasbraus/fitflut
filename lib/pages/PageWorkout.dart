@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/modules/WorkoutTask.dart';
+import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
 import 'package:fitflut/providers/WorkoutPageProvider.dart';
 import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
@@ -74,7 +75,7 @@ class PageWorkout extends StatelessWidget {
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     Text(
-                      "Exercises",
+                      LanguageProvider.getMap()["workouts"]["exercises"],
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     )
                   ],
@@ -138,7 +139,7 @@ class PageWorkout extends StatelessWidget {
                         builder: (context) => PageWorkoutAdd(),
                       ))
                     },
-                    label: Text("New Workout"),
+                    label: Text(LanguageProvider.getMap()["workouts"]["newworkout"]),
                     icon: Icon(Icons.add_rounded),
                   ),
                 ),

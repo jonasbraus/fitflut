@@ -5,13 +5,14 @@ import 'package:fitflut/pages/PageSettings.dart';
 import 'package:fitflut/pages/PageWorkout.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'LanguageProvider.dart';
+
 class PageProvider extends ChangeNotifier {
   int selectedPage = 0;
-  List<String> titles = ["Home", "Exercises", "Workouts", "Settings"];
   List<Widget> pages = [PageHome(), PageGym(), PageWorkout(), PageSettings()];
 
   String getSelectedTitle() {
-    return titles[selectedPage];
+    return LanguageProvider.getMap()["titles"][selectedPage];
   }
 
   Widget getPage() {

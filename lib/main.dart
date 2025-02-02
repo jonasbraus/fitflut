@@ -2,6 +2,7 @@ import 'package:fitflut/gymPages/BodyRegions.dart';
 import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
 import 'package:fitflut/providers/GymPageFilterProvider.dart';
+import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:fitflut/providers/PageProvider.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
 import 'package:fitflut/providers/WorkoutPageProvider.dart';
@@ -19,7 +20,7 @@ Future<void> main() async {
 
   await DatabaseHelper.initDb();
   SettingsProvider.selectedColor = await getColor();
-  print(SettingsProvider.selectedColor);
+  LanguageProvider.lang = await getLang();
 
   runApp(const MyApp());
 }
@@ -28,6 +29,12 @@ Future<int> getColor() async {
   final prefs = await SharedPreferences.getInstance();
 
   return prefs.getInt("color") ?? 0;
+}
+
+Future<String> getLang() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  return prefs.getString("lang") ?? "en";
 }
 
 class MyApp extends StatelessWidget {
@@ -58,20 +65,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => SettingsProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => LanguageProvider(),
+        )
       ],
-      child: Consumer<SettingsProvider>(builder: (context, prov, child) => MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor()),
-          useMaterial3: true,
+      child: Consumer<SettingsProvider>(
+        builder: (context, prov, child) => Consumer<LanguageProvider>(
+          builder: (context, value, child) => MaterialApp(
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: prov.getColor()),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: prov.getColor(), brightness: Brightness.dark),
+              useMaterial3: true,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: const MyHome(),
+          ),
         ),
-        darkTheme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: prov.getColor(), brightness: Brightness.dark),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: const MyHome(),
-      ),),
+      ),
     );
   }
 }
@@ -181,7 +195,7 @@ class MyHome extends StatelessWidget {
                       title: Text("Help"),
                       titlePadding: EdgeInsets.all(15),
                       content: Text(
-                        "hold exercise to edit or delete",
+                        LanguageProvider.getMap()["exercises"]["help"],
                         style: TextStyle(fontSize: 18),
                       ),
                       actions: [
@@ -209,7 +223,7 @@ class MyHome extends StatelessWidget {
                       title: Text("Help"),
                       titlePadding: EdgeInsets.all(15),
                       content: Text(
-                        "tap workout to start \n\nhold workout to edit\n\ncreate exercises before you create your first workout",
+                        LanguageProvider.getMap()["workouts"]["help"],
                         style: TextStyle(fontSize: 18),
                       ),
                       actions: [

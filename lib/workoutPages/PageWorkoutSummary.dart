@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/Workout.dart';
+import '../providers/LanguageProvider.dart';
 
 class PageWorkoutSummary extends StatelessWidget {
   const PageWorkoutSummary({super.key});
@@ -67,7 +68,7 @@ class PageWorkoutSummary extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Summary",
+                  LanguageProvider.getMap()["workouts"]["summary"],
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
@@ -125,7 +126,7 @@ class PageWorkoutSummary extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Finished Exercises",
+                      LanguageProvider.getMap()["workouts"]["finishedcount"],
                       style: TextStyle(fontSize: 15),
                     ),
                     SizedBox(width: 10),
@@ -145,7 +146,7 @@ class PageWorkoutSummary extends StatelessWidget {
               child: FilledButton.icon(
                 onPressed: () => {DatabaseHelper.insertTrack(runningProv.durationSeconds, runningProv.startTime, pageProv.workout!.id), pageProv.selectPage(0, null)},
                 icon: Icon(Icons.check),
-                label: Text("Finish"),
+                label: Text(LanguageProvider.getMap()["workouts"]["finish"]),
               ),
             )
           ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/Exercise.dart';
+import '../providers/LanguageProvider.dart';
 
 class WorkoutTask extends StatelessWidget {
   const WorkoutTask({super.key});
@@ -133,7 +134,7 @@ class WorkoutTask extends StatelessWidget {
                                   listen: false)
                               .selectPage(0, null)
                         },
-                        label: Text("Back"),
+                        label: Text(LanguageProvider.getMap()["workouts"]["back"]),
                         icon: Icon(Icons.arrow_back),
                       ),
                     ),

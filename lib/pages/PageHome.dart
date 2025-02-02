@@ -1,4 +1,5 @@
 import 'package:fitflut/helpers/DatabaseHelper.dart';
+import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:flutter/material.dart';
 
 class PageHome extends StatelessWidget {
@@ -158,7 +159,7 @@ class PageHome extends StatelessWidget {
             children: [
               SizedBox(height: 20,),
               Text(
-                "Welcome",
+                LanguageProvider.getMap()["home"]["welcome"],
                 style: TextStyle(fontSize: 25),
               ),
               SizedBox(height: 30),
@@ -173,7 +174,7 @@ class PageHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Last 7 days activity",
+                      LanguageProvider.getMap()["home"]["last7dayactivity"],
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 20),
@@ -195,7 +196,7 @@ class PageHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Last workout",
+                      LanguageProvider.getMap()["home"]["lastworkout"],
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 10),

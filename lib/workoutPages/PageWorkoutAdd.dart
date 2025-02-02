@@ -6,6 +6,7 @@ import 'package:search_page/search_page.dart';
 
 import '../helpers/DatabaseHelper.dart';
 import '../helpers/Exercise.dart';
+import '../providers/LanguageProvider.dart';
 
 class PageWorkoutAdd extends StatefulWidget {
   const PageWorkoutAdd({super.key});
@@ -29,7 +30,7 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        title: Text("New Workout"),
+        title: Text(LanguageProvider.getMap()["workouts"]["newworkout"]),
       ),
       body: FutureBuilder(
         future: getExercises(""),
@@ -67,7 +68,7 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                                 context: context,
                                 delegate: SearchPage<Exercise>(
                                   items: snapshot.data!,
-                                  searchLabel: "Search exercise",
+                                  searchLabel: LanguageProvider.getMap()["workouts"]["searchexercises"],
                                   filter: (exercise) => [exercise.name],
                                   showItemsOnEmpty: true,
                                   builder: (exercise) => GestureDetector(
@@ -111,7 +112,7 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                                 ),
                               )
                             },
-                            label: Text("Add Exercise"),
+                            label: Text(LanguageProvider.getMap()["workouts"]["addexercise"]),
                             icon: Icon(Icons.add),
                           ),
                         ),
@@ -194,7 +195,7 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                         Navigator.of(context).pop()
                       },
                   icon: Icon(Icons.save_alt),
-                  label: Text("Save")),
+                  label: Text(LanguageProvider.getMap()["general"]["save"])),
             )
           ],
         ),

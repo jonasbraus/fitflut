@@ -1,6 +1,7 @@
 import 'package:fitflut/helpers/Workout.dart';
 import 'package:fitflut/helpers/WorkoutEditChange.dart';
 import 'package:fitflut/helpers/WorkoutEditType.dart';
+import 'package:fitflut/providers/LanguageProvider.dart';
 import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        title: Text("Edit Workout"),
+        title: Text(LanguageProvider.getMap()["workouts"]["editworkout"]),
       ),
       body: FutureBuilder(
         future: getExercises(""),
@@ -80,7 +81,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                 context: context,
                                 delegate: SearchPage<Exercise>(
                                   items: snapshot.data!,
-                                  searchLabel: "Search exercise",
+                                  searchLabel: LanguageProvider.getMap()["workouts"]["searchexercises"],
                                   filter: (exercise) => [exercise.name],
                                   showItemsOnEmpty: true,
                                   builder: (exercise) => GestureDetector(
@@ -128,7 +129,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                 ),
                               )
                             },
-                            label: Text("Add Exercise"),
+                            label: Text(LanguageProvider.getMap()["workouts"]["addexercise"]),
                             icon: Icon(Icons.add),
                           ),
                         ),
@@ -197,7 +198,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                           context: context,
                           builder: (context) => AlertDialog(
                             content: Text(
-                              "Sure?",
+                              LanguageProvider.getMap()["general"]["sure"],
                               style: TextStyle(fontSize: 18),
                             ),
                             actions: [
@@ -211,20 +212,20 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                   Navigator.of(context).pop(),
                                   Navigator.of(context).pop()
                                 },
-                                label: Text("Delete"),
+                                label: Text(LanguageProvider.getMap()["general"]["delete"]),
                                 icon: Icon(Icons.delete),
                               ),
                               FilledButton.tonalIcon(
                                   onPressed: () =>
                                       {Navigator.of(context).pop()},
-                                  label: Text("Cancel"),
+                                  label: Text(LanguageProvider.getMap()["general"]["cancel"]),
                               icon: Icon(Icons.cancel),)
                             ],
                           ),
                         ),
                       },
                       icon: Icon(Icons.delete),
-                      label: Text("Delete"),
+                      label: Text(LanguageProvider.getMap()["general"]["delete"]),
                     ),
                   ),
                   SizedBox(
@@ -245,7 +246,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                         Navigator.of(context).pop()
                       },
                       icon: Icon(Icons.save_alt),
-                      label: Text("Save"),
+                      label: Text(LanguageProvider.getMap()["general"]["save"]),
                     ),
                   )
                 ],

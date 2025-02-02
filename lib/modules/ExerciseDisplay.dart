@@ -3,6 +3,8 @@ import 'package:fitflut/gymPages/PageGymEditExercise.dart';
 import 'package:fitflut/helpers/Exercise.dart';
 import 'package:flutter/material.dart';
 
+import '../providers/LanguageProvider.dart';
+
 class ExerciseDisplay extends StatelessWidget {
   final Exercise exercise;
 
@@ -78,12 +80,12 @@ class ExerciseDisplay extends StatelessWidget {
                     ),
                     Text(
                       {
-                        "stomach": "Stomach",
-                        "legs": "Legs",
-                        "chest": "Chest",
-                        "arms": "Arms",
-                        "fullBody": "Whole Body",
-                        "back": "Back"
+                        "stomach": LanguageProvider.getMap()["exercises"]["stomach"],
+                        "legs": LanguageProvider.getMap()["exercises"]["legs"],
+                        "chest": LanguageProvider.getMap()["exercises"]["chest"],
+                        "arms": LanguageProvider.getMap()["exercises"]["arms"],
+                        "fullBody": LanguageProvider.getMap()["exercises"]["fullbody"],
+                        "back": LanguageProvider.getMap()["exercises"]["back"]
                       }["${exercise.bodyRegion.toString().split('.')[1]}"]!,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     )

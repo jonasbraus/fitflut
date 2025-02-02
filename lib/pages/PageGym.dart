@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:material_color_utilities/material_color_utilities.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/LanguageProvider.dart';
+
 class PageGym extends StatelessWidget {
   const PageGym({super.key});
 
@@ -69,7 +71,7 @@ class PageGym extends StatelessWidget {
                           builder: (context) => PageGymAddExercise(),
                         ))
                       },
-                      label: Text("Add Exercise"),
+                      label: Text(LanguageProvider.getMap()["exercises"]["addexercise"]),
                       icon: Icon(Icons.add_rounded),
                     ),
                   ),

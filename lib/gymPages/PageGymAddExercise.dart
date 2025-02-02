@@ -5,6 +5,8 @@ import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/LanguageProvider.dart';
+
 class PageGymAddExercise extends StatefulWidget {
   const PageGymAddExercise({super.key});
 
@@ -22,7 +24,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        title: Text("Add Exercise"),
+        title: Text(LanguageProvider.getMap()["exercises"]["addexercise"]),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +45,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       TextField(
                         onChanged: (value) => name = value,
                         decoration: InputDecoration(
-                            labelText: "Exercise Name",
+                            labelText: LanguageProvider.getMap()["exercises"]["exercisename"],
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15))),
                       ),
@@ -54,7 +56,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "Weight",
+                            LanguageProvider.getMap()["exercises"]["weight"],
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
@@ -78,12 +80,12 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       ),
                       Center(
                         child: Text(
-                          "Training Region",
+                          LanguageProvider.getMap()["exercises"]["trainingregion"],
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Arms"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["arms"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.arms,
                         onChanged: (value) => setState(() {
@@ -91,7 +93,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Chest"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["chest"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.chest,
                         onChanged: (value) => setState(() {
@@ -99,7 +101,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Stomach"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["stomach"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.stomach,
                         onChanged: (value) => setState(() {
@@ -107,7 +109,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Back"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["back"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.back,
                         onChanged: (value) => setState(() {
@@ -115,7 +117,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Legs"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["legs"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.legs,
                         onChanged: (value) => setState(() {
@@ -123,7 +125,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text("Whole Body"),
+                        title: Text(LanguageProvider.getMap()["exercises"]["fullbody"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.fullBody,
                         onChanged: (value) => setState(() {
@@ -151,7 +153,7 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       Navigator.of(context).pop()
                     },
                 icon: Icon(Icons.save_alt),
-                label: Text("Save")),
+                label: Text(LanguageProvider.getMap()["general"]["save"])),
           )
         ],
       ),
