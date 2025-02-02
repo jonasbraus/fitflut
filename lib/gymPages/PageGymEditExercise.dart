@@ -78,7 +78,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         ),
                         Slider(
                           min: 1,
-                          max: 200,
+                          max: 100,
                           value: weight.toDouble(),
                           onChanged: (value) => setState(() {
                             weight = value.toInt();
@@ -89,7 +89,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         ),
                         Center(
                           child: Text(
-                            "Training Region:",
+                            "Training Region",
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -165,6 +165,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         .updateState(),
                     Navigator.of(context).pop()
                   },
+                      icon: Icon(Icons.delete),
                   label: Text("Delete"),
                 )),
                 SizedBox(
@@ -182,6 +183,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         .updateState(),
                     Navigator.of(context).pop()
                   },
+                      icon: Icon(Icons.save_alt),
                   label: Text("Save"),
                 ))
               ],

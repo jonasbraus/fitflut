@@ -20,22 +20,25 @@ class ExerciseDisplay extends StatelessWidget {
         ))
       },
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 40),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            image: {
-              BodyRegions.arms: DecorationImage(
-                  image: AssetImage("assets/arm.jpeg"), fit: BoxFit.cover),
-              BodyRegions.stomach: DecorationImage(
-                  image: AssetImage("assets/stomach.jpeg"), fit: BoxFit.cover),
-              BodyRegions.chest: DecorationImage(
-                  image: AssetImage("assets/chest.jpeg"), fit: BoxFit.cover),
-              BodyRegions.legs: DecorationImage(
-                  image: AssetImage("assets/leg.jpeg"), fit: BoxFit.cover),
-              BodyRegions.back: DecorationImage(
-                  image: AssetImage("assets/back.jpeg"), fit: BoxFit.cover),
-              BodyRegions.fullBody: DecorationImage(
-                  image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover),
-            }[exercise.bodyRegion]),
+            // image: {
+            //   BodyRegions.arms:
+            //   BodyRegions.stomach: DecorationImage(
+            //       image: AssetImage("assets/stomach.jpeg"), fit: BoxFit.cover),
+            //   BodyRegions.chest: DecorationImage(
+            //       image: AssetImage("assets/chest.jpeg"), fit: BoxFit.cover),
+            //   BodyRegions.legs: DecorationImage(
+            //       image: AssetImage("assets/leg.jpeg"), fit: BoxFit.cover),
+            //   BodyRegions.back: DecorationImage(
+            //       image: AssetImage("assets/back.jpeg"), fit: BoxFit.cover),
+            //   BodyRegions.fullBody: DecorationImage(
+            //       image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover),
+            // }[exercise.bodyRegion]),
+          image: DecorationImage(
+              image: AssetImage("assets/body.jpeg"), fit: BoxFit.cover),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

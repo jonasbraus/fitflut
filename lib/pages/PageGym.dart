@@ -3,14 +3,16 @@ import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/helpers/Exercise.dart';
 import 'package:fitflut/modules/ExerciseDisplay.dart';
 import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
+import 'package:fitflut/providers/GymPageFilterProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:material_color_utilities/material_color_utilities.dart';
 import 'package:provider/provider.dart';
 
 class PageGym extends StatelessWidget {
   const PageGym({super.key});
 
-  Future<List<Exercise>> getExercises() async {
-    List<Exercise> output = await DatabaseHelper.getExercises();
+  Future<List<Exercise>> getExercises(String filter) async {
+    List<Exercise> output = await DatabaseHelper.getExercises(filter);
     return output;
   }
 
@@ -34,29 +36,46 @@ class PageGym extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExerciseUpdateProvider>(
-      builder: (context, value, child) => FutureBuilder(
-        future: getExercises(),
-        builder: (context, snapshot) => Container(
-          padding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child: SingleChildScrollView(
-                child: Column(
-                    spacing: 10, children: buildExerciseChildren(snapshot)),
-              )),
-              FilledButton.icon(
-                onPressed: () => {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PageGymAddExercise(),
-                  ))
-                },
-                label: Text("Add Exercise"),
-                icon: Icon(Icons.add_rounded),
-              )
-            ],
+      builder: (context, exerciseUpdateProvider, child) => Consumer<GymPageFilterProvider>(
+        builder: (context, gymPageProvider, child) => FutureBuilder(
+          future: getExercises(gymPageProvider.filter),
+          builder: (context, snapshot) => Container(
+            // EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10)
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                          spacing: 10,
+                          children: buildExerciseChildren(snapshot)),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+                    child: FilledButton.icon(
+                      onPressed: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PageGymAddExercise(),
+                        ))
+                      },
+                      label: Text("Add Exercise"),
+                      icon: Icon(Icons.add_rounded),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

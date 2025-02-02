@@ -35,9 +35,11 @@ dependencies:
   sqflite: ^2.4.1
   path: ^1.8.0
   flutter_launcher_icons: ^0.14.3
+  material_color_utilities: ^0.11.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,8 @@ flutter:
     - assets/leg.jpeg
     - assets/back.jpeg
     - assets/body.jpeg
+    - assets/gym1.jpeg
+    - assets/gym3.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

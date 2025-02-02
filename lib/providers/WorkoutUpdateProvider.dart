@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ExerciseUpdateProvider extends ChangeNotifier {
+class WorkoutUpdateProvider extends ChangeNotifier {
   bool update = false;
 
   void updateState() {
