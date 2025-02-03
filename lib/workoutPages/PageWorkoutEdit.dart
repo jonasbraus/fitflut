@@ -61,11 +61,9 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                 initialValue: name,
                 onChanged: (value) => name = value,
                 decoration: InputDecoration(
-                  labelText: "Workout Name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
+                    labelText: "Workout Name",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
               ),
             ),
             SizedBox(
@@ -205,13 +203,10 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
               ),
             )),
             Container(
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, bottom: 40, top: 10),
+              padding: EdgeInsets.only(left: 10, right: 10, bottom: 40, top: 10),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.secondary.withAlpha(25),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    topLeft: Radius.circular(15)),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,29 +231,19 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                                   await DatabaseHelper.deleteWorkout(
                                       widget.workout),
                                   Provider.of<WorkoutUpdateProvider>(context,
-                                          listen: false)
+                                      listen: false)
                                       .updateState(),
                                   Navigator.of(context).pop(),
                                   Navigator.of(context).pop()
                                 },
-                                label: Text(
-                                  LanguageProvider.getMap()["general"]
-                                      ["delete"],
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface),
-                                ),
-                                icon: Icon(
-                                  Icons.delete,
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
+                                label: Text(LanguageProvider.getMap()["general"]
+                                ["delete"], style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+                                icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.onSurface,),
                               ),
                               TextButton.icon(
                                 onPressed: () => {Navigator.of(context).pop()},
                                 label: Text(LanguageProvider.getMap()["general"]
-                                    ["cancel"]),
+                                ["cancel"]),
                                 icon: Icon(Icons.arrow_back),
                               )
                             ],
@@ -266,8 +251,7 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                         ),
                       },
                       icon: Icon(Icons.delete),
-                      label:
-                          Text(LanguageProvider.getMap()["general"]["delete"]),
+                      label: Text(LanguageProvider.getMap()["general"]["delete"]),
                     ),
                   ),
                   SizedBox(
@@ -278,12 +262,9 @@ class _PageWorkoutEditState extends State<PageWorkoutEdit> {
                       onPressed: () async => {
                         await DatabaseHelper.updateWorkout(
                             Workout(
-                                id: widget.workout.id,
-                                name: name,
-                                exercises: []),
+                                id: widget.workout.id, name: name, exercises: []),
                             changes),
-                        Provider.of<WorkoutUpdateProvider>(context,
-                                listen: false)
+                        Provider.of<WorkoutUpdateProvider>(context, listen: false)
                             .updateState(),
                         Navigator.of(context).pop()
                       },

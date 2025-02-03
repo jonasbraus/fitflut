@@ -44,9 +44,6 @@ dependencies:
   shared_preferences: ^2.5.1
   info_widget: ^1.0.0
   json_theme: ^7.0.0+3
-  firebase_core: ^3.10.1
-  cloud_firestore: ^5.6.2
-  firebase_auth: ^5.4.1
 
 dev_dependencies:
   flutter_test:

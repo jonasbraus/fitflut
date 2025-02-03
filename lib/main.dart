@@ -1,15 +1,11 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:fitflut/firebase_options.dart';
 import 'package:fitflut/gymPages/BodyRegions.dart';
 import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
 import 'package:fitflut/providers/GymPageFilterProvider.dart';
 import 'package:fitflut/providers/GymgoalProvider.dart';
 import 'package:fitflut/providers/LanguageProvider.dart';
-import 'package:fitflut/providers/LoginProvider.dart';
 import 'package:fitflut/providers/PageProvider.dart';
 import 'package:fitflut/providers/RunningWorkoutProvider.dart';
 import 'package:fitflut/providers/WorkoutPageProvider.dart';
@@ -27,14 +23,6 @@ import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  LoginProvider.user = FirebaseAuth.instance.currentUser;
-
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    LoginProvider.user = user;
-  });
 
   await DatabaseHelper.initDb();
   SettingsProvider.selectedColor = await getColor();
@@ -101,9 +89,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => GymgoalProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoginProvider(),
         )
       ],
       child: Consumer<SettingsProvider>(
