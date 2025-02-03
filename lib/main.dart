@@ -11,6 +11,7 @@ import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
 import 'package:fitflut/workoutPages/SettingsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:info_widget/info_widget.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -211,61 +212,21 @@ class MyHome extends StatelessWidget {
           Consumer<PageProvider>(
             builder: (context, value, child) => {
               0: Container(),
-              1: IconButton(
-                onPressed: () => {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      contentPadding: EdgeInsets.all(15),
-                      actionsPadding: EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      title: Text("Help"),
-                      titlePadding: EdgeInsets.all(15),
-                      content: Text(
-                        LanguageProvider.getMap()["exercises"]["help"],
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      actions: [
-                        FilledButton(
-                          onPressed: () => {
-                            Navigator.of(context).pop(),
-                          },
-                          child: Text("OK"),
-                        )
-                      ],
-                    ),
-                  )
-                },
-                icon: Icon(Icons.info),
+              1: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: InfoWidget(
+                  infoText: LanguageProvider.getMap()["exercises"]["help"],
+                  iconData: Icons.info,
+                  iconColor: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
-              2: IconButton(
-                onPressed: () => {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      contentPadding: EdgeInsets.all(15),
-                      actionsPadding: EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      title: Text("Help"),
-                      titlePadding: EdgeInsets.all(15),
-                      content: Text(
-                        LanguageProvider.getMap()["workouts"]["help"],
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      actions: [
-                        FilledButton(
-                          onPressed: () => {
-                            Navigator.of(context).pop(),
-                          },
-                          child: Text("OK"),
-                        )
-                      ],
-                    ),
-                  )
-                },
-                icon: Icon(Icons.info),
+              2: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: InfoWidget(
+                  infoText: LanguageProvider.getMap()["workouts"]["help"],
+                  iconData: Icons.info,
+                  iconColor: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               3: Container(),
               4: Container(),

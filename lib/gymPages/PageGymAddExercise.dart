@@ -45,7 +45,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       TextField(
                         onChanged: (value) => name = value,
                         decoration: InputDecoration(
-                            labelText: LanguageProvider.getMap()["exercises"]["exercisename"],
+                            labelText: LanguageProvider.getMap()["exercises"]
+                                ["exercisename"],
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15))),
                       ),
@@ -80,12 +81,14 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                       ),
                       Center(
                         child: Text(
-                          LanguageProvider.getMap()["exercises"]["trainingregion"],
+                          LanguageProvider.getMap()["exercises"]
+                              ["trainingregion"],
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["arms"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["arms"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.arms,
                         onChanged: (value) => setState(() {
@@ -93,7 +96,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["chest"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["chest"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.chest,
                         onChanged: (value) => setState(() {
@@ -101,7 +105,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["stomach"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["stomach"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.stomach,
                         onChanged: (value) => setState(() {
@@ -109,7 +114,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["back"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["back"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.back,
                         onChanged: (value) => setState(() {
@@ -117,7 +123,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["legs"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["legs"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.legs,
                         onChanged: (value) => setState(() {
@@ -125,7 +132,8 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
                         }),
                       ),
                       RadioListTile<BodyRegions>(
-                        title: Text(LanguageProvider.getMap()["exercises"]["fullbody"]),
+                        title: Text(
+                            LanguageProvider.getMap()["exercises"]["fullbody"]),
                         groupValue: bodyRegion,
                         value: BodyRegions.fullBody,
                         onChanged: (value) => setState(() {
@@ -138,23 +146,30 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
               ),
             ),
           )),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+          Container(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 40, top: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
             child: FilledButton.icon(
-                onPressed: () async => {
-                      await DatabaseHelper.insertExercise(Exercise(
-                          id: -1,
-                          name: name,
-                          weight: weight,
-                          bodyRegion: bodyRegion)),
-                      Provider.of<ExerciseUpdateProvider>(context,
-                              listen: false)
-                          .updateState(),
-                      Navigator.of(context).pop()
-                    },
-                icon: Icon(Icons.save_alt),
-                label: Text(LanguageProvider.getMap()["general"]["save"])),
-          )
+              onPressed: () async => {
+                await DatabaseHelper.insertExercise(Exercise(
+                    id: -1,
+                    name: name,
+                    weight: weight,
+                    bodyRegion: bodyRegion)),
+                Provider.of<ExerciseUpdateProvider>(context, listen: false)
+                    .updateState(),
+                Navigator.of(context).pop()
+              },
+              icon: Icon(Icons.save_alt),
+              label: Text(LanguageProvider.getMap()["general"]["save"]),
+            ),
+          ),
         ],
       ),
     );

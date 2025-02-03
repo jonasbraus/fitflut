@@ -38,11 +38,87 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                onChanged: (value) => name = value,
+                decoration: InputDecoration(
+                    labelText: "Workout Name",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: FilledButton.icon(
+                onPressed: () => {
+                  showSearch(
+                    context: context,
+                    delegate: SearchPage<Exercise>(
+                      items: snapshot.data!,
+                      searchLabel: LanguageProvider.getMap()["workouts"]
+                          ["searchexercises"],
+                      filter: (exercise) => [exercise.name],
+                      showItemsOnEmpty: true,
+                      builder: (exercise) => GestureDetector(
+                        onTap: () => setState(() {
+                          exercises.add(exercise);
+                          Navigator.pop(context);
+                        }),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/body.jpeg"),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .surface
+                                          .withAlpha(150),
+                                      BlendMode.srcATop)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                exercise.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(color: Colors.black, blurRadius: 5)
+                                    ]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                },
+                label:
+                    Text(LanguageProvider.getMap()["workouts"]["addexercise"]),
+                icon: Icon(Icons.add),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Expanded(
                 child: SingleChildScrollView(
               child: Padding(
                 padding:
-                    EdgeInsets.only(left: 10, top: 20, bottom: 5, right: 10),
+                    EdgeInsets.only(left: 10, top: 0, bottom: 5, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,104 +127,25 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextField(
-                          onChanged: (value) => name = value,
-                          decoration: InputDecoration(
-                              labelText: "Workout Name",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15))),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Center(
-                          child: FilledButton.icon(
-                            onPressed: () => {
-                              showSearch(
-                                context: context,
-                                delegate: SearchPage<Exercise>(
-                                  items: snapshot.data!,
-                                  searchLabel: LanguageProvider.getMap()["workouts"]["searchexercises"],
-                                  filter: (exercise) => [exercise.name],
-                                  showItemsOnEmpty: true,
-                                  builder: (exercise) => GestureDetector(
-                                    onTap: () => setState(() {
-                                      exercises.add(exercise);
-                                      Navigator.pop(context);
-                                    }),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Container(
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/body.jpeg"),
-                                              fit: BoxFit.cover, colorFilter: ColorFilter.mode(
-                                              Theme.of(context).colorScheme.surface.withAlpha(150),
-                                              BlendMode.srcATop
-                                          )),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            exercise.name,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                                shadows: [
-                                                  Shadow(
-                                                      color: Colors.black,
-                                                      blurRadius: 5)
-                                                ]),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            },
-                            label: Text(LanguageProvider.getMap()["workouts"]["addexercise"]),
-                            icon: Icon(Icons.add),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
                         for (Exercise exercise in exercises)
                           Container(
                             margin: EdgeInsets.only(bottom: 10),
                             padding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                             decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    image: AssetImage("assets/body.jpeg"),
-                                    fit: BoxFit.cover, colorFilter: ColorFilter.mode(
-                                    Theme.of(context).colorScheme.surface.withAlpha(150),
-                                    BlendMode.srcATop
-                                ))
-                                // image: DecorationImage(
-                                //     image: AssetImage({
-                                //       "arms": "assets/arm.jpeg",
-                                //       "back": "assets/back.jpeg",
-                                //       "stomach": "assets/stomach.jpeg",
-                                //       "legs": "assets/leg.jpeg",
-                                //       "chest": "assets/chest.jpeg",
-                                //       "fullBody": "assets/body.jpeg"
-                                //     }[exercise.bodyRegion
-                                //         .toString()
-                                //         .split(".")[1]]!),
-                                //     fit: BoxFit.cover),
-                                ),
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                image: AssetImage("assets/body.jpeg"),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .surface
+                                        .withAlpha(150),
+                                    BlendMode.srcATop),
+                              ),
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -184,25 +181,33 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                 ),
               ),
             )),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+            Container(
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, bottom: 40, top: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+              ),
               child: FilledButton.icon(
-                  onPressed: () async => {
-                        await DatabaseHelper.insertWorkout(
-                          Workout(
-                            id: -1,
-                            name: name,
-                            exercises: exercises,
-                          ),
-                        ),
-                        Provider.of<WorkoutUpdateProvider>(context,
-                                listen: false)
-                            .updateState(),
-                        Navigator.of(context).pop()
-                      },
-                  icon: Icon(Icons.save_alt),
-                  label: Text(LanguageProvider.getMap()["general"]["save"])),
-            )
+                onPressed: () async => {
+                  await DatabaseHelper.insertWorkout(
+                    Workout(
+                      id: -1,
+                      name: name,
+                      exercises: exercises,
+                    ),
+                  ),
+                  Provider.of<WorkoutUpdateProvider>(context, listen: false)
+                      .updateState(),
+                  Navigator.of(context).pop()
+                },
+                icon: Icon(Icons.save_alt),
+                label: Text(LanguageProvider.getMap()["general"]["save"]),
+              ),
+            ),
           ],
         ),
       ),

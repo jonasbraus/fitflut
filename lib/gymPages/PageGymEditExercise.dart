@@ -57,7 +57,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           initialValue: name,
                           onChanged: (value) => name = value,
                           decoration: InputDecoration(
-                              labelText: LanguageProvider.getMap()["exercises"]["exercisename"],
+                              labelText: LanguageProvider.getMap()["exercises"]
+                                  ["exercisename"],
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15))),
                         ),
@@ -92,12 +93,14 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                         ),
                         Center(
                           child: Text(
-                            LanguageProvider.getMap()["exercises"]["trainingregion"],
+                            LanguageProvider.getMap()["exercises"]
+                                ["trainingregion"],
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["arms"]),
+                          title: Text(
+                              LanguageProvider.getMap()["exercises"]["arms"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.arms,
                           onChanged: (value) => setState(() {
@@ -105,7 +108,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["chest"]),
+                          title: Text(
+                              LanguageProvider.getMap()["exercises"]["chest"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.chest,
                           onChanged: (value) => setState(() {
@@ -113,7 +117,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["stomach"]),
+                          title: Text(LanguageProvider.getMap()["exercises"]
+                              ["stomach"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.stomach,
                           onChanged: (value) => setState(() {
@@ -121,7 +126,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["back"]),
+                          title: Text(
+                              LanguageProvider.getMap()["exercises"]["back"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.back,
                           onChanged: (value) => setState(() {
@@ -129,7 +135,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["legs"]),
+                          title: Text(
+                              LanguageProvider.getMap()["exercises"]["legs"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.legs,
                           onChanged: (value) => setState(() {
@@ -137,7 +144,8 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                           }),
                         ),
                         RadioListTile<BodyRegions>(
-                          title: Text(LanguageProvider.getMap()["exercises"]["fullbody"]),
+                          title: Text(LanguageProvider.getMap()["exercises"]
+                              ["fullbody"]),
                           groupValue: bodyRegion,
                           value: BodyRegions.fullBody,
                           onChanged: (value) => setState(() {
@@ -151,8 +159,15 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, bottom: 20, right: 10),
+          Container(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 40, top: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary.withAlpha(25),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -162,12 +177,16 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
+                        contentPadding: EdgeInsets.only(top: 18, left: 18),
+                        actionsPadding: EdgeInsets.all(10),
+                        actionsAlignment: MainAxisAlignment.spaceBetween,
+                        insetPadding: EdgeInsets.all(0),
                         content: Text(
                           LanguageProvider.getMap()["general"]["sure"],
                           style: TextStyle(fontSize: 18),
                         ),
                         actions: [
-                          FilledButton.icon(
+                          TextButton.icon(
                             onPressed: () async => {
                               await DatabaseHelper.deleteExercise(Exercise(
                                   id: widget.exercise.id,
@@ -180,13 +199,15 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                               Navigator.of(context).pop(),
                               Navigator.of(context).pop()
                             },
-                            label: Text(LanguageProvider.getMap()["general"]["delete"]),
-                            icon: Icon(Icons.delete),
+                            label: Text(
+                                LanguageProvider.getMap()["general"]["delete"], style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+                            icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.onSurface,),
                           ),
-                          FilledButton.tonalIcon(
+                          TextButton.icon(
                             onPressed: () => {Navigator.pop(context)},
-                            label: Text(LanguageProvider.getMap()["general"]["cancel"]),
-                            icon: Icon(Icons.cancel),
+                            label: Text(
+                                LanguageProvider.getMap()["general"]["cancel"]),
+                            icon: Icon(Icons.arrow_back),
                           )
                         ],
                       ),
@@ -215,7 +236,7 @@ class _PageGymEditExerciseState extends State<PageGymEditExercise> {
                 ))
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -120,6 +120,19 @@ class PageHome extends StatelessWidget {
     );
   }
 
+  String getTimeDiffToString(DateTime current, DateTime past) {
+    int timeSpan = current.difference(past).inDays;
+
+    if (timeSpan > 1) {
+      return LanguageProvider.lang == "en" ? "$timeSpan Days Ago" : "Vor $timeSpan Tagen";
+    }
+    else if (timeSpan > 0) {
+      return LanguageProvider.lang == "en" ? "Yesterday" : "Gestern";
+    }
+
+    return LanguageProvider.lang == "en" ? "Today" : "Heute";
+  }
+
   Widget buildLastWorkoutDisplay(BuildContext context,
       AsyncSnapshot<Map<String, Object?>> snapshot) {
     if (!snapshot.hasData) {
@@ -168,7 +181,7 @@ class PageHome extends StatelessWidget {
               children: [
                 Icon(Icons.calendar_month),
                 SizedBox(width: 5),
-                Text(formatTime(dt))
+                Text(getTimeDiffToString(DateTime.now(), dt))
               ],
             )
           ],

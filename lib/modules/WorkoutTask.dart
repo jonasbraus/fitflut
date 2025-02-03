@@ -183,10 +183,39 @@ class WorkoutTask extends StatelessWidget {
                     child: Container(
                       child: FilledButton.icon(
                         onPressed: () => {
-                          prov.stop(),
-                          Provider.of<WorkoutPageProvider>(context,
-                                  listen: false)
-                              .selectPage(2, workout)
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              contentPadding: EdgeInsets.only(top: 18, left: 18),
+                              actionsPadding: EdgeInsets.all(10),
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
+                              insetPadding: EdgeInsets.all(0),
+                              content: Text(
+                                LanguageProvider.getMap()["general"]["sure"],
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              actions: [
+                                TextButton.icon(
+                                  onPressed: () async => {
+                                    prov.stop(),
+                                    Provider.of<WorkoutPageProvider>(context,
+                                            listen: false)
+                                        .selectPage(2, workout),
+                                    Navigator.of(context).pop()
+                                  },
+                                  label: Text(
+                                    "Stop", style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
+                                  icon: Icon(Icons.stop, color: Theme.of(context).colorScheme.onSurface,),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () => {Navigator.pop(context)},
+                                  label: Text(
+                                      LanguageProvider.getMap()["general"]["cancel"]),
+                                  icon: Icon(Icons.arrow_back),
+                                )
+                              ],
+                            ),
+                          )
                         },
                         label: Text("Stop"),
                         icon: Icon(Icons.stop),
