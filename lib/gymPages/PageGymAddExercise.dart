@@ -23,7 +23,9 @@ class _PageGymAddExerciseState extends State<PageGymAddExercise> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 5,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.secondary.withAlpha(25),
+        surfaceTintColor: Colors.transparent,
         title: Text(LanguageProvider.getMap()["exercises"]["addexercise"]),
       ),
       body: Column(

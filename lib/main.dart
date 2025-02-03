@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fitflut/gymPages/BodyRegions.dart';
 import 'package:fitflut/helpers/DatabaseHelper.dart';
 import 'package:fitflut/providers/ExerciseUpdateProvider.dart';
@@ -10,8 +12,10 @@ import 'package:fitflut/providers/WorkoutPageProvider.dart';
 import 'package:fitflut/providers/WorkoutUpdateProvider.dart';
 import 'package:fitflut/workoutPages/SettingsProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:info_widget/info_widget.dart';
+import 'package:json_theme/json_theme.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +29,12 @@ Future<void> main() async {
   LanguageProvider.lang = await getLang();
   GymgoalProvider.goal = await getGymgoal();
 
-  runApp(const MyApp());
+
+  final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
+  final themeJson = jsonDecode(themeStr);
+  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+
+  runApp(MyApp(theme: theme,));
 }
 
 Future<int> getColor() async {
@@ -47,7 +56,8 @@ Future<int> getGymgoal() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeData theme;
+  const MyApp({super.key, required this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +94,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<SettingsProvider>(
         builder: (context, prov, child) => Consumer<LanguageProvider>(
           builder: (context, value, child) => MaterialApp(
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: prov.getColor(), brightness: Brightness.dark),
-              useMaterial3: true,
-            ),
-            darkTheme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: prov.getColor(), brightness: Brightness.dark),
-              useMaterial3: true,
-            ),
+            theme: theme,
             debugShowCheckedModeBanner: false,
             home: const MyHome(),
           ),
@@ -149,7 +150,10 @@ class MyHome extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        elevation: 5,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.secondary.withAlpha(25),
+        surfaceTintColor: Colors.transparent,
+        // forceMaterialTransparency: true,
         actions: [
           Consumer<PageProvider>(
             builder: (context, value, child) => {

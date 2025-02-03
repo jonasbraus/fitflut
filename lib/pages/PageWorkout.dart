@@ -92,7 +92,7 @@ class PageWorkout extends StatelessWidget {
                     )
                   ],
                 ),
-                Icon(Icons.play_arrow)
+                Icon(Icons.play_arrow, color: Theme.of(context).colorScheme.primary,)
               ],
             ),),
           ),

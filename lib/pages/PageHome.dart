@@ -91,10 +91,7 @@ class PageHome extends StatelessWidget {
                     height: (snapshot.data![i]).toDouble() * 20,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .onSurface),
+                        color: Theme.of(context).colorScheme.primary,),
                   ),
                   SizedBox(width: 10)
                 ],
@@ -160,7 +157,7 @@ class PageHome extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Theme.of(context).colorScheme.primary),
                 ),
               ),
             ),

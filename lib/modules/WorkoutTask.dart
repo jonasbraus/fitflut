@@ -17,7 +17,9 @@ class WorkoutTask extends StatelessWidget {
         FilledButton(
           style: ButtonStyle(
               backgroundColor:
-                  WidgetStatePropertyAll(Color.fromARGB(10, 255, 255, 255))),
+                  WidgetStatePropertyAll(Color.fromARGB(10, 255, 255, 255)),
+          padding: WidgetStatePropertyAll(EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20))
+          ),
           onPressed: () => {
             prov.updateCheckboxAt(index, !prov.checkedValues[index], context)
           },

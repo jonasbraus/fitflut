@@ -43,6 +43,7 @@ dependencies:
   search_page: ^2.3.0
   shared_preferences: ^2.5.1
   info_widget: ^1.0.0
+  json_theme: ^7.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
     - assets/body.jpeg
     - assets/gym1.jpeg
     - assets/gym3.jpeg
+    - assets/appainter_theme.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

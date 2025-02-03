@@ -34,52 +34,6 @@ class PageSettings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              LanguageProvider.getMap()["settings"]["colorscheme"],
-              style: TextStyle(fontSize: 18),
-            ),
-            Consumer<SettingsProvider>(
-              builder: (context, prov, child) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Radio<int>(
-                    onChanged: (value) =>
-                    {prov.selectColor(0), storeColorScheme(0)},
-                    value: 0,
-                    groupValue: SettingsProvider.selectedColor,
-                    fillColor: WidgetStatePropertyAll(Colors.blue),
-                  ),
-                  Radio<int>(
-                    onChanged: (value) =>
-                    {prov.selectColor(1), storeColorScheme(1)},
-                    value: 1,
-                    groupValue: SettingsProvider.selectedColor,
-                    fillColor: WidgetStatePropertyAll(Colors.green),
-                  ),
-                  Radio<int>(
-                    onChanged: (value) =>
-                    {prov.selectColor(2), storeColorScheme(2)},
-                    value: 2,
-                    groupValue: SettingsProvider.selectedColor,
-                    fillColor: WidgetStatePropertyAll(Colors.purple),
-                  ),
-                  Radio<int>(
-                    onChanged: (value) =>
-                    {prov.selectColor(3), storeColorScheme(3)},
-                    value: 3,
-                    groupValue: SettingsProvider.selectedColor,
-                    fillColor: WidgetStatePropertyAll(Colors.red),
-                  ),
-                  Radio<int>(
-                    onChanged: (value) =>
-                    {prov.selectColor(4), storeColorScheme(4)},
-                    value: 4,
-                    groupValue: SettingsProvider.selectedColor,
-                    fillColor: WidgetStatePropertyAll(Colors.orange),
-                  )
-                ],
-              ),
-            ),
             Text(LanguageProvider.getMap()["settings"]["language"],
                 style: TextStyle(fontSize: 18)),
             SizedBox(
