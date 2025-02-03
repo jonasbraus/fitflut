@@ -16,9 +16,6 @@ jobs:
           architecture: x64
       - run: flutter pub get
 
-      - run: sed -i '1i platform :ios, \'13.0\'' Podfile
-        working-directory: ios
-
       - run: pod repo update
         working-directory: ios
 
