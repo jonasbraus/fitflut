@@ -133,7 +133,7 @@ class _PageWorkoutAddState extends State<PageWorkoutAdd> {
                           Container(
                             margin: EdgeInsets.only(bottom: 10),
                             padding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
+                                vertical: 6, horizontal: 20),
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(15),
