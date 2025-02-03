@@ -19,7 +19,7 @@ jobs:
       - run: pod repo update
         working-directory: ios
 
-      - run: sed -i "platform :ios, '13.0'" Podfile
+      - run: sed -i "1i platform :ios, \'13.0\'" Podfile
         working-directory: ios
 
       - run: flutter build ios --release --no-codesign --no-tree-shake-icons
