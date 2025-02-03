@@ -17,7 +17,7 @@ jobs:
       - run: flutter pub get
 
       - name: set ios version
-      - run: |
+        run: |
           sed -i "s/platform :ios, '.*'/platform :ios, '13.0'/g" ios/Runner/Podfile
 
       - run: pod repo update
