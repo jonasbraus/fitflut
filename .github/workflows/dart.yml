@@ -16,10 +16,10 @@ jobs:
           architecture: x64
       - run: flutter pub get
 
-      - run: pod repo update
+      - run: sed -i '1i platform :ios, \'13.0\'' Podfile
         working-directory: ios
 
-      - run: sed -i "1i platform :ios, \'13.0\'" Podfile
+      - run: pod repo update
         working-directory: ios
 
       - run: flutter build ios --release --no-codesign --no-tree-shake-icons
